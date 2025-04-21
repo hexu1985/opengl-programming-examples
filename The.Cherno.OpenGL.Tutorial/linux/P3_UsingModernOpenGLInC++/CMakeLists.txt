@@ -7,8 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
 
 add_executable(application src/Application.cpp)
 
-target_link_libraries(application glfw OpenGL::GL)
+target_link_libraries(application glfw GLEW::GLEW OpenGL::GL)
 
