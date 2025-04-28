@@ -5,8 +5,13 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <signal.h>
 
+#if 1
 #define ASSERT(x) if(!(x)) __builtin_trap();
+#else
+#define ASSERT(x) if(!(x)) raise(SIGTRAP); 
+#endif
 #define GLCall(x) GLClearError();\
     x;\
     ASSERT(GLLogCall(#x, __FILE__, __LINE__));
