@@ -35,25 +35,28 @@ OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
 OpenGL ES profile extensions:
 ```
 
-**GLEW开源库**
+### Ubuntu24.04 上安装glfw
 
-项目链接：<https://github.com/nigels-com/glew>
+**通过 apt 安装**
 
-apt命令安装：
+GLFW 的稳定版本通常包含在 Ubuntu 的仓库中：
 
 ```bash
-$ apt-cache search glew
-fonts-glewlwyd - OAuth2 authentication server providing Json Web Tokens - font files
-glew-utils - OpenGL Extension Wrangler - utilities
-glewlwyd - OAuth2 authentication server providing Json Web Tokens
-glewlwyd-common - OAuth2 authentication server providing Json Web Tokens - common files
-libglew-dev - OpenGL Extension Wrangler - development environment
-libglew2.0 - OpenGL Extension Wrangler - runtime environment
-libglewmx-dev - OpenGL Extension Wrangler MX - development environment
-libglewmx1.13 - OpenGL Extension Wrangler (Multiple Rendering Contexts)
-$ sudo apt install glew-utils libglew-dev libglew2.0
+$ sudo apt update
+$ sudo apt install libglfw3 libglfw3-dev
 ```
 
-**GLFW开源库**
+安装后，头文件会保存在 /usr/include/GLFW/，库文件在 /usr/lib/x86_64-linux-gnu/。
 
-参考文档：<https://www.glfw.org/docs/3.3/quick.html>
+### Ubuntu24.04 上安装glew
+
+**通过 apt 安装**
+
+Ubuntu 官方仓库提供了 GLEW 的开发包，安装命令如下：
+
+```bash
+$ sudo apt update
+$ sudo apt install libglew-dev
+```
+
+libglew-dev 包含头文件（/usr/include/GL/glew.h）和库文件（/usr/lib/x86_64-linux-gnu/libGLEW.so）。
