@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(SOIL2 REQUIRED)
 
 set(SHADER_SCRIPTS vertShader.glsl fragShader.glsl)
 
@@ -34,5 +35,5 @@ add_executable(example
     Utils.h
 )
 
-target_link_libraries(example glfw GLEW::GLEW OpenGL::GL)
+target_link_libraries(example glfw GLEW::GLEW soil2::soil2 OpenGL::GL)
 
