@@ -5,21 +5,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SHADER_SCRIPTS Basic.shader)
+set(SHADER_FILES Basic.shader)
 
-foreach(script ${SHADER_SCRIPTS})
+foreach(file ${SHADER_FILES})
     add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/res/shaders/${script}
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/res/shaders/${file}
         COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/res/shaders
         COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/${script}
-                ${CMAKE_CURRENT_BINARY_DIR}/res/shaders/${script}
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/${script}
-        COMMENT "Copying shader script ${script}"
+                ${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/${file}
+                ${CMAKE_CURRENT_BINARY_DIR}/res/shaders/${file}
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/${file}
+        COMMENT "Copying shader file ${file}"
     )
 endforeach()
 
-add_custom_target(copy_scripts ALL
+add_custom_target(copy_files ALL
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/res/shaders/Basic.shader
 )
 
@@ -42,4 +42,4 @@ add_executable(application
 
 target_link_libraries(application glfw GLEW::GLEW OpenGL::GL)
 
-add_dependencies(application copy_scripts)
+add_dependencies(application copy_files)
