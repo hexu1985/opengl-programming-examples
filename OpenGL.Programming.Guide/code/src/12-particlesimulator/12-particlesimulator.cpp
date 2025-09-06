@@ -74,8 +74,6 @@ END_APP_DECLARATION()
 
 DEFINE_APP(ComputeParticleSimulator, "Compute Shader Particle System")
 
-#define STRINGIZE(a) #a
-
 static inline float random_float()
 {
     float res;
@@ -110,48 +108,46 @@ void ComputeParticleSimulator::Initialize(const char * title)
     compute_prog = glCreateProgram();
 
     static const char compute_shader_source[] =
-        STRINGIZE(
-#version 430 core\n
-
-layout (std140, binding = 0) uniform attractor_block
-{
-    vec4 attractor[64]; // xyz = position, w = mass
-};
-
-layout (local_size_x = 1024) in;
-
-layout (rgba32f, binding = 0) uniform imageBuffer velocity_buffer;
-layout (rgba32f, binding = 1) uniform imageBuffer position_buffer;
-
-uniform float dt = 1.0;
-
-void main(void)
-{
-    vec4 vel = imageLoad(velocity_buffer, int(gl_GlobalInvocationID.x));
-    vec4 pos = imageLoad(position_buffer, int(gl_GlobalInvocationID.x));
-
-    int i;
-
-    pos.xyz += vel.xyz * dt;
-    pos.w -= 0.0001 * dt;
-
-    for (i = 0; i < 4; i++)
-    {
-        vec3 dist = (attractor[i].xyz - pos.xyz);
-        vel.xyz += dt * dt * attractor[i].w * normalize(dist) / (dot(dist, dist) + 10.0);
-    }
-
-    if (pos.w <= 0.0)
-    {
-        pos.xyz = -pos.xyz * 0.01;
-        vel.xyz *= 0.01;
-        pos.w += 1.0f;
-    }
-
-    imageStore(position_buffer, int(gl_GlobalInvocationID.x), pos);
-    imageStore(velocity_buffer, int(gl_GlobalInvocationID.x), vel);
-}
-        );
+        "#version 430 core\n\n"
+        "\n"
+        "layout (std140, binding = 0) uniform attractor_block\n"
+        "{\n"
+        "    vec4 attractor[64]; // xyz = position, w = mass\n"
+        "};\n"
+        "\n"
+        "layout (local_size_x = 1024) in;\n"
+        "\n"
+        "layout (rgba32f, binding = 0) uniform imageBuffer velocity_buffer;\n"
+        "layout (rgba32f, binding = 1) uniform imageBuffer position_buffer;\n"
+        "\n"
+        "uniform float dt = 1.0;\n"
+        "\n"
+        "void main(void)\n"
+        "{\n"
+        "    vec4 vel = imageLoad(velocity_buffer, int(gl_GlobalInvocationID.x));\n"
+        "    vec4 pos = imageLoad(position_buffer, int(gl_GlobalInvocationID.x));\n"
+        "\n"
+        "    int i;\n"
+        "\n"
+        "    pos.xyz += vel.xyz * dt;\n"
+        "    pos.w -= 0.0001 * dt;\n"
+        "\n"
+        "    for (i = 0; i < 4; i++)\n"
+        "    {\n"
+        "        vec3 dist = (attractor[i].xyz - pos.xyz);\n"
+        "        vel.xyz += dt * dt * attractor[i].w * normalize(dist) / (dot(dist, dist) + 10.0);\n"
+        "    }\n"
+        "\n"
+        "    if (pos.w <= 0.0)\n"
+        "    {\n"
+        "        pos.xyz = -pos.xyz * 0.01;\n"
+        "        vel.xyz *= 0.01;\n"
+        "        pos.w += 1.0f;\n"
+        "    }\n"
+        "\n"
+        "    imageStore(position_buffer, int(gl_GlobalInvocationID.x), pos);\n"
+        "    imageStore(velocity_buffer, int(gl_GlobalInvocationID.x), vel);\n"
+        "}\n";
 
     vglAttachShaderSource(compute_prog, GL_COMPUTE_SHADER, compute_shader_source);
 
