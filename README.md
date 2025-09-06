@@ -3,6 +3,7 @@
 - [The Cherno OpenGL(video lesson)](The.Cherno.OpenGL.Tutorial)
 - [计算机图形学编程(使用OpenGL和C++)](Computer.Graphics.Programming.In.OpenGL.With.Cpp)
 - [Shader开发实战](Practical.Shader.Development)
+- [OpenGL编程指南](OpenGL.Programming.Guide)
 
 
 **Ubuntu安装 OpenGL及相关依赖**
