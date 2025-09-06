@@ -18,13 +18,13 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 set (CMAKE_DEBUG_POSTFIX "_d")
 
-find_package(X11 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
 
 if(WIN32)
 set(COMMON_LIBS vermilion ${OPENGL_LIBRARIES} optimized glfw3 debug glfw3_d)
 elseif (UNIX)
-set(COMMON_LIBS vermilion ${OPENGL_LIBRARIES} glfw ${GLFW_LIBRARIES} OpenGL::GL ${X11_LIBRARIES} rt dl)
+set(COMMON_LIBS vermilion ${OPENGL_LIBRARIES} glfw OpenGL::GL rt dl)
 else()
 set(COMMON_LIBS vermilion)
 endif()
@@ -100,9 +100,6 @@ IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 include_directories( include )
-include_directories(lib/glfw/include)
-
-add_subdirectory(lib/glfw)
 
 ADD_CUSTOM_TARGET(debug ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE:STRING=Debug ${PROJECT_SOURCE_DIR})
 ADD_CUSTOM_TARGET(release ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE:STRING=Release ${PROJECT_SOURCE_DIR})
