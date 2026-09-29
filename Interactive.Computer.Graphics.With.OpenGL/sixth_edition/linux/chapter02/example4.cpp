@@ -2,8 +2,8 @@
 
 #include "Angel.h"
 
-const int NumTimesToSubdivide = 4;
-const int NumTetrahedrons = 256;            // 4^5 tetrahedrons
+const int NumTimesToSubdivide = 5;
+const int NumTetrahedrons = 1024;            // 4^5 tetrahedrons
 const int NumTriangles = 4*NumTetrahedrons;  // 4 triangles / tetrahedron
 const int NumVertices = 3*NumTriangles;      // 3 vertices / triangle
 
@@ -23,6 +23,7 @@ triangle( const vec3& a, const vec3& b, const vec3& c, const int color )
 	vec3( 0.0, 0.0, 1.0 ),
 	vec3( 0.0, 0.0, 0.0 )
     };
+    
     points[Index] = a;  colors[Index] = base_colors[color];  Index++;
     points[Index] = b;  colors[Index] = base_colors[color];  Index++;
     points[Index] = c;  colors[Index] = base_colors[color];  Index++;
@@ -55,7 +56,7 @@ divide_tetra( const vec3& a, const vec3& b,
         divide_tetra( a, v0, v1, v2, count - 1 );
         divide_tetra( v0, b, v3, v5, count - 1 );
         divide_tetra( v1, v3, c, v4, count - 1 );
-	divide_tetra( v2, v5, v4, d, count - 1 );
+	divide_tetra( v2, v4, v5, d, count - 1 );
     }
     else {
         tetra( a, b, c, d );    // draw tetrahedron at end of recursion
@@ -80,8 +81,8 @@ init( void )
 
     // Create a vertex array object
     GLuint vao;
-    glGenVertexArraysAPPLE( 1, &vao );
-    glBindVertexArrayAPPLE( vao );
+    glGenVertexArrays( 1, &vao );
+    glBindVertexArray( vao );
 
     // Create and initialize a buffer object
     GLuint buffer;
@@ -130,8 +131,10 @@ init( void )
 void
 display( void )
 {
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); glDrawArrays( GL_TRIANGLES, 0, NumVertices );
-    glFlush(); }
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glDrawArrays( GL_TRIANGLES, 0, NumVertices );
+    glFlush();
+}
 
 //----------------------------------------------------------------------------
 
@@ -153,8 +156,12 @@ main( int argc, char **argv )
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH );
     glutInitWindowSize( 512, 512 );
+    glutInitContextVersion( 3, 2 );
+    glutInitContextProfile( GLUT_CORE_PROFILE );
     glutCreateWindow( "Simple GLSL example" );
 
+    glewInit();
+	
     init();
 
     glutDisplayFunc( display );

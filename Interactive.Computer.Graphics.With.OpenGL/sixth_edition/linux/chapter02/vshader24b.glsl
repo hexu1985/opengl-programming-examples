@@ -1,5 +1,7 @@
-attribute  vec4 vPosition;
-varying vec4 color;
+#version 150
+
+in  vec4 vPosition;
+out vec4 color;
 
 void
 main()

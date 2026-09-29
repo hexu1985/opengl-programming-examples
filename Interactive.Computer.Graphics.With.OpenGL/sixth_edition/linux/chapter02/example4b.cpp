@@ -47,7 +47,7 @@ divide_tetra( const vec3& a, const vec3& b,
         divide_tetra( a, v0, v1, v2, count - 1 );
         divide_tetra( v0, b, v3, v5, count - 1 );
         divide_tetra( v1, v3, c, v4, count - 1 );
-	divide_tetra( v2, v4, v5, d, count - 1 );
+	    divide_tetra( v2, v4, v5, d, count - 1 );
     }
     else {
         tetra( a, b, c, d );    // draw tetrahedron at end of recursion
@@ -72,8 +72,8 @@ init( void )
 
     // Create a vertex array object
     GLuint vao;
-    glGenVertexArraysAPPLE( 1, &vao );
-    glBindVertexArrayAPPLE( vao );
+    glGenVertexArrays( 1, &vao );
+    glBindVertexArray( vao );
 
     // Create and initialize a buffer object
     GLuint buffer;
@@ -129,8 +129,12 @@ main( int argc, char **argv )
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH );
     glutInitWindowSize( 512, 512 );
+    glutInitContextVersion( 3, 2 );
+    glutInitContextProfile( GLUT_CORE_PROFILE );
     glutCreateWindow( "Simple GLSL example" );
 
+    glewInit();
+	
     init();
 
     glutDisplayFunc( display );

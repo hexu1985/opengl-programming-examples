@@ -31,11 +31,10 @@ init( void )
         points[i] = ( points[i - 1] + vertices[j] ) / 2.0;
     }
 
-
     // Create a vertex array object
     GLuint vao;
-    glGenVertexArraysAPPLE( 1, &vao );
-    glBindVertexArrayAPPLE( vao );
+    glGenVertexArrays( 1, &vao );
+    glBindVertexArray( vao );
 
     // Create and initialize a buffer object
     GLuint buffer;
@@ -50,7 +49,7 @@ init( void )
     // Initialize the vertex position attribute from the vertex shader
     GLuint loc = glGetAttribLocation( program, "vPosition" );
     glEnableVertexAttribArray( loc );
-    glVertexAttribPointer( loc, 3, GL_FLOAT, GL_FALSE, 0, 
+    glVertexAttribPointer( loc, 3, GL_FLOAT, GL_FALSE, 0,
                            BUFFER_OFFSET(0) );
 
     glClearColor( 1.0, 1.0, 1.0, 1.0 ); // white background
@@ -86,7 +85,11 @@ main( int argc, char **argv )
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_RGBA );
     glutInitWindowSize( 512, 512 );
+    glutInitContextVersion( 3, 2 );
+    glutInitContextProfile( GLUT_CORE_PROFILE );
     glutCreateWindow( "Simple GLSL example" );
+
+    glewInit();
 
     init();
 
