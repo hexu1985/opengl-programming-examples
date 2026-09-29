@@ -4,6 +4,7 @@
 - [计算机图形学编程(使用OpenGL和C++)](Computer.Graphics.Programming.In.OpenGL.With.Cpp)
 - [Shader开发实战](Practical.Shader.Development)
 - [OpenGL编程指南](OpenGL.Programming.Guide)
+- [交互式计算机图形学 基于OpenGL着色器的自顶向下方法](Interactive.Computer.Graphics.With.OpenGL)
 
 
 **Ubuntu安装 OpenGL及相关依赖**
